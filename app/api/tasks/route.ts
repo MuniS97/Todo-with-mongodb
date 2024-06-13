@@ -12,6 +12,7 @@ export async function GET() {
     return NextResponse.json({ message: e }, { status: 500 });
   }
 }
+
 export async function POST(req: NextRequest) {
   await dbConnect();
   try {
