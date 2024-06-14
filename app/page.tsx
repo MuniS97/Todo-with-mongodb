@@ -68,8 +68,8 @@ export default function Home() {
                 key={task._id}
               />
             ))
-          ) : (
-            <span>Loading...</span>
+          ) : ( 
+            <span>There is no task to do!</span>
           )}
         </div>
       </div>
