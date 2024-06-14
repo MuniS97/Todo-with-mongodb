@@ -13,6 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 interface ITask {
   _id: string;
@@ -37,20 +38,30 @@ export default function Home() {
         <div className="w-full flex items-center justify-between">
           <h1 className="text-5xl font-semibold">Dashboard</h1>
 
-          <Dialog>
-            <DialogTrigger>
-              <Button className="w-[11rem] h-[3rem]">Add Task</Button>
-            </DialogTrigger>
-            <DialogContent className="w-[600px]">
-              <DialogHeader>
-                <DialogTitle>Add Task</DialogTitle>
-                <DialogDescription>
-                  {<TaskForm update={update} setUpdate={setUpdate} />}
-                </DialogDescription>
-              </DialogHeader>
-            </DialogContent>
-          </Dialog>
+          <div className="flex items-center justify-center gap-2.5">
+            <Dialog>
+              <DialogTrigger>
+                <span className=" bg-red-700 hover:opacity-90 text-base font-normal text-white w-[11rem] rounded-lg h-[3rem] flex items-center justify-center">Add Task</span>
+              </DialogTrigger>
+              <DialogContent className="w-[600px]">
+                <DialogHeader>
+                  <DialogTitle>Add Task</DialogTitle>
+                  <DialogDescription>
+                    {<TaskForm update={update} setUpdate={setUpdate} />}
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
 
+            <SignedOut>
+              <Button className="bg-blue-700 hover:opacity-90 text-base font-normal text-white w-[11rem] rounded-lg h-[3rem] flex items-center justify-center">
+                <SignInButton />
+              </Button>
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
         </div>
         <div className="text-base font-semibold">
           Количество задач:{" "}
@@ -68,21 +79,11 @@ export default function Home() {
                 key={task._id}
               />
             ))
-          ) : ( 
-            <span>There is no task to do!</span>
+          ) : (
+            <span>There is no task</span>
           )}
         </div>
       </div>
     </main>
   );
 }
-
-// function postData() {
-//   const task = {
-//     title: "Web project",
-//   };
-
-//   axios
-//     .post("http://localhost:3000/api/tasks", task)
-//     .then((res) => console.log(res));
-// }
