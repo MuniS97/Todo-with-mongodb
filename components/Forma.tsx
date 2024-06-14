@@ -2,6 +2,8 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { RiErrorWarningFill } from "react-icons/ri";
 import axios from "axios";
+import { Button } from "./ui/button";
+
 
 type Inputs = {
   title: string;
@@ -14,7 +16,7 @@ interface TaskFormProps {
 }
 
 export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
-  const base_url = "http://localhost:3001/api/tasks";
+  const base_url = "http://localhost:3000/api/tasks";
 
   const {
     register,
@@ -24,7 +26,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
     formState: { errors },
   } = useForm<Inputs>();
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {    
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
     axios.post(base_url, data).then((res) => {
       if (res.status === 200 || res.status === 201) {
         alert("Done!!");
@@ -40,7 +42,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className={"flex justify-between items-end gap-5 pb-1"}
+      className={"flex justify-center flex-col items-center gap-2.5 py-5"}
     >
       <div
         className={"w-full flex items-start justify-center flex-col gap-[2px]"}
@@ -55,7 +57,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
             placeholder="Title name"
             id="title"
             className={
-              "w-full h-[30px] px-[10px] font-normal text-sm rounded-md border border-black"
+              "w-full h-[40px] px-[10px] font-normal text-sm rounded-md border border-black"
             }
             {...register("title", { required: true })}
           />
@@ -75,7 +77,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
             id="description"
             placeholder="Description"
             className={
-              "w-full h-[30px] px-[10px] font-normal text-sm rounded-md border border-black"
+              "w-full h-[40px] px-[10px] font-normal text-sm rounded-md border border-black"
             }
             {...register("description", { required: true })}
           />
@@ -83,13 +85,10 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
         </div>
       </div>
 
-      <input
-        className={
-          "w-full max-w-[80px] px-5 h-[30px] rounded-md border border-black cursor-pointer"
-        }
-        defaultValue={"ADD"}
+      <Button
+        className="w-full px-5 h-[40px] rounded-md border border-black cursor-pointer"
         type="submit"
-      />
+      >ADD</Button>
     </form>
   );
 };

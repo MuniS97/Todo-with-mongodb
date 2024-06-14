@@ -4,9 +4,18 @@ import { TaskForm } from "@/components/Forma";
 import { Task } from "@/components/Task";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button";
 
 interface ITask {
-  id: string;
+  _id: string;
   title: string;
   description: string;
   update: boolean;
@@ -14,7 +23,7 @@ interface ITask {
 }
 
 export default function Home() {
-  const base_url = "http://localhost:3001/api/tasks";
+  const base_url = "http://localhost:3000/api/tasks";
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
 
@@ -24,11 +33,24 @@ export default function Home() {
 
   return (
     <main className="w-full h-screen pt-[5rem] flex items-start justify-center">
-      <div className="w-full max-w-[1360px] flex items-start justify-center flex-col gap-6">
+      <div className="w-full max-w-[1240px] flex items-start justify-center flex-col gap-6">
         <div className="w-full flex items-center justify-between">
           <h1 className="text-5xl font-semibold">Dashboard</h1>
 
-          {<TaskForm update={update} setUpdate={setUpdate}/>}
+          <Dialog>
+            <DialogTrigger>
+              <Button className="w-[11rem] h-[3rem]">Add Task</Button>
+            </DialogTrigger>
+            <DialogContent className="w-[600px]">
+              <DialogHeader>
+                <DialogTitle>Add Task</DialogTitle>
+                <DialogDescription>
+                  {<TaskForm update={update} setUpdate={setUpdate} />}
+                </DialogDescription>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
+
         </div>
         <div className="text-base font-semibold">
           Количество задач:{" "}
@@ -42,8 +64,8 @@ export default function Home() {
                 setUpdate={setUpdate}
                 description={task.description}
                 title={task.title}
-                id={task.id}
-                key={task.id}
+                _id={task._id}
+                key={task._id}
               />
             ))
           ) : (
@@ -61,6 +83,6 @@ export default function Home() {
 //   };
 
 //   axios
-//     .post("http://localhost:3001/api/tasks", task)
+//     .post("http://localhost:3000/api/tasks", task)
 //     .then((res) => console.log(res));
 // }

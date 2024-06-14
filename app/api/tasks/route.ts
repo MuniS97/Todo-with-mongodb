@@ -28,3 +28,22 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: e }, { status: 500 });
   }
 }
+
+
+export async function DELETE(req: NextRequest) {
+
+  const searchParams = req.nextUrl.searchParams;
+  const id = searchParams.get('id');
+  console.log(id);
+  
+  try {
+    const data = await tasks.findByIdAndDelete(id)
+
+    return NextResponse.json(
+      { message: "Task successfully deleted", data }, { status: 201 });
+
+  } catch (e) {
+    return NextResponse.json({ message: e }, { status: 500 });
+
+  }
+}
