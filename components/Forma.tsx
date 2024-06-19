@@ -17,7 +17,7 @@ interface TaskFormProps {
   userId: string
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update, userId }) => {
+export const TaskForm = ({ setUpdate, update, userId }: TaskFormProps) => {
   const base_url = "http://localhost:3000/api/tasks";
 
   const {
@@ -87,7 +87,7 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update, userId })
           />
           {errors.description && <RiErrorWarningFill size={24} color="red" />}
         </div>
-        <input type="text" id="userId" hidden value={userId} defaultValue={userId}
+        <input type="text" id="userId" hidden defaultValue={userId}
           {...register('userId', { required: true })}
         />
       </div>
