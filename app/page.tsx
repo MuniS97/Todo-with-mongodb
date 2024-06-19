@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button";
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignInButton, SignedIn, SignedOut, UserButton, useUser } from "@clerk/nextjs";
 
 interface ITask {
   _id: string;
@@ -24,6 +24,7 @@ interface ITask {
 }
 
 export default function Home() {
+  const userId = useUser().user?.id as string
   const base_url = "http://localhost:3000/api/tasks";
   const [tasks, setTasks] = useState<ITask[]>([]);
   const [update, setUpdate] = useState<boolean>(false);
@@ -31,6 +32,8 @@ export default function Home() {
   useEffect(() => {
     axios.get(base_url).then((res) => setTasks(res.data.data));
   }, [update]);
+
+
 
   return (
     <main className="w-full h-screen pt-[5rem] flex items-start justify-center">
@@ -47,7 +50,7 @@ export default function Home() {
                 <DialogHeader>
                   <DialogTitle>Add Task</DialogTitle>
                   <DialogDescription>
-                    {<TaskForm update={update} setUpdate={setUpdate} />}
+                    {<TaskForm update={update} setUpdate={setUpdate} userId={userId} />}
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
