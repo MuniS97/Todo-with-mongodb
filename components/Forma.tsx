@@ -8,14 +8,16 @@ import { Button } from "./ui/button";
 type Inputs = {
   title: string;
   description: string;
+  userId: string
 };
 
 interface TaskFormProps {
   setUpdate: (arg: boolean) => void;
   update: boolean;
+  userId: string
 }
 
-export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
+export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update, userId }) => {
   const base_url = "http://localhost:3000/api/tasks";
 
   const {
@@ -27,6 +29,8 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+
     axios.post(base_url, data).then((res) => {
       if (res.status === 200 || res.status === 201) {
         alert("Done!!");
@@ -83,6 +87,9 @@ export const TaskForm: React.FC<TaskFormProps> = ({ setUpdate, update }) => {
           />
           {errors.description && <RiErrorWarningFill size={24} color="red" />}
         </div>
+        <input type="text" id="userId" hidden value={userId} defaultValue={userId}
+          {...register('userId', { required: true })}
+        />
       </div>
 
       <Button

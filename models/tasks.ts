@@ -13,6 +13,12 @@ const TaskSchema = new mongoose.Schema({
     unique: false,
     trim: true,
   },
+  userId: {
+    type: String,
+    required: [true, "Please write task's owner id!"],
+    unique: true,
+    trim: true,
+  }
 });
 
 export default mongoose.models.Task || mongoose.model("Task", TaskSchema);
